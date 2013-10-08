@@ -10,16 +10,17 @@ import game
 
 class Key(threading.Thread,pygame.sprite.Sprite):
 	# recibe lista de tiburiones, posicion, velocidad y genero
-	def __init__(self,key_img,X,Y,vel):
-#		self.Sharks_path = filename
+	def __init__(self,n,key_lst,X,Y,vel):#		self.Sharks_path = filename
 		#threading.Thread.__init__(self)
-		super(Sharks, self).__init__()
+		super(Key, self).__init__()
 		self._stop = threading.Event()
 		pygame.sprite.Sprite.__init__(self)
+		self.n = n #numero 
 		self.X = X
 		self.Y = Y
 		self.alive = True
-		self.vel = vel
+		self.opened = False
+		self.vel = 5
 		self.img_pos = 0
 		self.Keys=[]
 #		self.Fisheslist=[]
@@ -29,18 +30,21 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		#self.spri = pygame.sprite.Sprite() # create sprite
 		
 		#self.topleft = [self.X, self.Y]
-		self.image = self.key_img
+		self.key_lst = key_lst
+		self.image = self.key_lst[0]
 		self.rect = self.key_img.get_rect() # use image extent values		
 		self.rect.topleft = [self.X, self.Y] # put the ball in the top left corner
 
 		self.Or = randrange(0,4)
+
+	def get_curr_img(self):
+		return self.image
 
 	def load_sprite(self,sprit_sharks,sprit_fishes):
 		self.key_sprites = sprit_key
 		self.block_sprites = sprit_block
 		
 	def Mov(self):
-
 		""" OR = 0 : NORTE
 		    OR = 1 : ESTE 
 		    OR = 2 : SUR
@@ -100,15 +104,6 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 
 		elif (self.Or == 2):
 			self.Y += self.vel			
-			if(self.mov_n==0):
-				self.shark_img_curr = self.shark_lst[self.Or +self.mov_p][0]
-				self.mov_n =1
-			elif (self.mov_n==1):
-				self.shark_img_curr = self.shark_lst[self.Or +self.mov_p][1]				
-				self.mov_n=0
-			
-			elif(self.comer==1):
-				self.comer=0
 			
 		elif(self.Or ==3):
 			self.X -= self.vel
@@ -154,20 +149,12 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 	def Draw(self):		
 		self.screen.blit( self.shark_img_curr,(self.X, self.Y ))
 	
-	def get_curr_img(self):
-		return self.shark_img_curr
 
 	def Colision(self,objeto):
-		if (objeto.type=="fish"):
-			self.Comer(objeto)
-		elif (objeto.type=="shark"):
-			if (self.genre != objeto.genre):
-				self.Reproducir()
-			else:
-				if(randrange(1)==1):
-					self.Comer(objeto)
-				else:
-					self.Die()
+		if (objeto.type=="Block"):
+			self.ChgOr()
+		elif (objeto.type=="Lock"):
+			self.Win()
 
 	def Reproducir(self):
 		print "Me reproduje"
@@ -187,53 +174,24 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		objeto.Die()
 
 	def Die(self):
-
-		self.die = 1
-		self.shark_img_curr = self.shark_lst[self.Or +self.mov_p][3]
-		time.sleep(0.7)
+		self.image = self.key_lst[1]
 		self.alive=False
 		self._stop.set()
+	
+	def Win(self):
+		self.opened = True
 
 	def run(self):
-		print "Soy Tiburon"
-		imgTemp=self.shark_img_curr
-		self.shark_img_curr=pygame.image.load("./Images/huevoShark.png").convert_alpha()
-		time.sleep(3)
-		self.shark_img_curr=imgTemp
-		
-		while self.alive==True:
-			
+		print 'Im Key' + self.n " , i will find you!"	
+		while self.alive==True:		
 			self.Mov()
-
-			colisionShark = pygame.sprite.spritecollide(self,self.Sharks_sprites,0)
-			if colisionShark:
-				if self!=colisionShark[0]:
-					self.Colision(colisionShark[0])
-					print "tiburon con tiburon"
-			# 	print "Colicione, soy tiburon"
-
-			time.sleep(0.3)
-
-		# self.Sharks_ListX = []
-		# self.Sharks_ListY = []
-
-		# self.N_fishes_ListX = []
-		# self.N_fishes_ListY = []
-		# print self.N_self.Sharks
-		# for i in range (1,self.N_self.Sharks+1):
-		# 	self.N_self.Sharks_ListX.append( randrange(800) )
-		# for i in range (1,self.N_self.Sharks+1):
-		# 	self.N_self.Sharks_ListY.append(randrange(600))
-		# print self.N_self.Sharks_ListY[1]
-
-		
+			time.sleep(vel)
 
 
-
-	def Draw_Sharks(self):
+"""	def Draw_Sharks(self):
 		for i in range(1,self.N_self.Sharks) :
 			self.screen.blit( self.Sharks_img[0][0],(self.N_self.Sharks_ListX[i], self.N_self.Sharks_ListY[i] ), self.Shark_area)
 		#pygame.Surface.blit( self.Sharks_img (50,50))
 
 	
-
+"""

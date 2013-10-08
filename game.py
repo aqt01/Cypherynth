@@ -6,8 +6,9 @@ from random import randrange
 	
 
 	
-Sharkslist = []
-Fisheslist = []
+KeyList = []
+BlockList = []
+
 
 class Game:
 
@@ -69,47 +70,27 @@ class Game:
 
 	# Funcion para crear las unidades, tanto los peces como los tiburones
 
-	def Create_units(self,Shark_n,Fishes_n,vel):
-		self.pos = [] 
+	def Key_img_list(self):
+		return self.key_lst
+
+	def Create_units(self,key_n,vel):
+		
 		self.vel = vel
-		self.Shark_n = Shark_n
-		self.Fishes_n = Fishes_n
-		self.Sharks = []
-		self.Fishes = []		
-		self.Sharks_sprites = []
-		self.Fishes_sprites = []
-
+		self.key_n = Shark_n
+		self.Keys = []
+		self.Keys_sprites = []
 		
+		for i in range (key_n):
+			x = Key.Key( self.key_img_list(), self.X, self.Y)
 
-
-		for i in range (Shark_n):
-			if i >= Shark_n/2:
-				g=0
-			else:
-				g=1
-			x = Sharks.Sharks( self.Retrieve_shark_lst(), randrange(self.Width), randrange(self.Heigth),self.vel,  g,self.Width,self.Heigth)
-			#MODIFICADO
-			Sharkslist.append(x)
-
-		
-		for i in range (Fishes_n):
-			if i >= Fishes_n/2:
-				g=0
-			else:
-				g=1
-
-			y = Fishes.Fishes(self.Retrieve_fish_lst(), randrange(self.Width),randrange(self.Heigth), self.vel, g,self.Width,self.Heigth)
-
-			#MODIFICADO
-			Fisheslist.append(y)
+		key_lst.append(x)
 
 
 		self.Collect_sprites()
 
 		
-		for i in range(Shark_n):
-			#MODIFICADO
-			Sharkslist[i].start()
+		for i in range(Shark_n): 
+			key_lst[i].start()
 
 		for i in range(Fishes_n):
 			#MODIFICADO
@@ -123,31 +104,33 @@ class Game:
 		self.lock_path = self.sprites_path + "Lock.png"
 		self.key_path = self.sprites_path + "Key.png"
 		self.block_path = self.sprites_path + "Block.png"
+		self.die_path = self.sprites_path + "Die.png"
+		self.win_path = self.sprites_path + "Win.png"
+		
+		self. key_lst = []
 
 		#Se cargan las imagenes del pez varon
 
 		self.lock_img =	self.game.image.load(self.lock_path).convert_alpha(self.background))
-		self.key_img =	self.game.image.load(self.key_path).convert_alpha(self.background) )
+		
+		self.key_lst = [	self.game.image.load(self.key_path).convert_alpha(self.background), self.game.image.load(self.die_path).convert_alpha(self.background), self.game.image.load(self.win_path).convert_alpha(self.background) ]
+		
 		self.block_img =	self.game.image.load(self.block_path).convert_alpha(self.background) )
 
-		
+		self.sprites_img = [ lock_img,list( key_lst),block_img]
 
-		self.sprites_img = [ lock_img,key_img,block_img]
 
 	def draw(self):
 		self.screen.blit( self.background, (0,0) )
-
 		self.Collect_sprites()
 
-		for i in range(self.Shark_n):	
-			if Sharkslist[i].alive == True:
-				#MODIFICADO
-				self.screen.blit( Sharkslist[i].get_curr_img() ,(Sharkslist[i].X, Sharkslist[i].Y ))
+		for i in range(self.key_n):	
+			if key_lst[i].alive == True:		
+				self.screen.blit( key_lst[i].get_curr_img() ,(key_lst[i].X, key_lst[i].Y ))
 
 
-		for j in range(self.Fishes_n):
-			if Fisheslist[j].alive == True:
-				self.screen.blit( Fisheslist[j].get_curr_img() ,(Fisheslist[j].X, Fisheslist[j].Y ))
+		for j in range(self.blocks_n):
+			self.screen.blit( block_lst[j].get_curr_img() ,(block_lst[j].X, block_lst[j].Y ))
 
 	
 
