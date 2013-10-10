@@ -8,8 +8,9 @@ class Lock(pygame.sprite.Sprite):
 		self.x = X
 		self.y = Y
 		self.image = img
+		self.image = pygame.transform.scale(self.image, (dim,dim))
 		self.rect = img.get_rect()
-
+		
 
 	def get_img(self):
 		return self.image

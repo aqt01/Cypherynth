@@ -1,5 +1,5 @@
 import pygame
-import Lock, Sharks, Key
+import Lock, Key
 import thread
 import time
 import Block
@@ -10,29 +10,36 @@ KeyList = []
 BlockList = []
 maze_map = []
 
+
+
+
 class Game:
 
-	def __init__(self,w,h, vel,dimen): # w = 800, h = 600
+	def __init__(self,h ,vel,dimen): # w = 800, h = 600
 		#Se inicializa pygame
 		self.read_conf_file()
-		self.maze_length = h/dimen
+		self.factor = 20
+		self.maze_length = h*self.factor*dimen
 		self.dimension = dimen
 		self.game = pygame
 		self.game.init()
 		self. vel = vel
 		self.x = 0
 		self.y = 0
+		self.key_x = 0
+		self.key_y = 0
+
 		# Se carga el path del background
 		self.background_path ="./Images/sprites/Mario_blocks.png"
-		self.Width = w
-		self.Heigth = h	
+		self.Width = self.factor*self.dimension*h
+		self.Heigth = self.factor*self.dimension*h
 
 		# Se carga el fondo con w y h que son introducidas por parametros
-		self.screen=pygame.display.set_mode( (w,h),0,32)
+		self.screen=pygame.display.set_mode( (self.Width,self.Heigth),0,32)
 		# Se carga la imagen de fondo
 		
 		self.background = self.game.image.load(self.background_path).convert()
-		self.background = pygame.transform.scale(self.background,(w,h))
+		self.background = pygame.transform.scale(self.background,(self.Width,self.Heigth))
 		# Se asigna la velocidad que seran los px que los sprites caminaran por cada paso
 			
 		self.vel = vel
@@ -76,6 +83,7 @@ class Game:
 			j.load_sprite(self.Sharks_spri,self.Fishes_spri)
 
 		otherlistfish = []
+
 		for i in range(self.Fishes_n):
 			if Fisheslist[i].alive:
 				
@@ -112,17 +120,22 @@ class Game:
 		#Creamos bloques en las posiciones del mapa
 
 		count = 0 
-		for val1 in ( maze_map):
+		for val in ( maze_map):
 			if count>20:
 				break
 			for i in range(0,20):
-				if ( val1[i] == "0"):
+				if ( val[i] == "0"):
 					#self.screen.blit(self.block_img ,(self.x,self.y))						
 					self.Blocks.append( Block.blocks( self.x, self.y,self.dimension,self.block_img) )
-				if(val1[i]=="3"):					
+				if(val[i]=="3"):					
 						self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
-				if (val1[i]=="2"):
-						self.Key = Key.Key( self.key_img_list(), self.x, self.y,8)
+				if (val[i] =="2"):						
+						self.key_x = count
+						self.key_y = i 
+						self.key_points = [self.key_x,self.key_y]
+						self.Key = Key.Key( self.key_img_list(), self.x, self.y,self.dimension,8,maze_map)
+						maze_map
+				
 				#if(val1[i]=="2"):					
 				#		self..append( Key.Key( self.x, self.y,self.dimension,self.lock_img) )
 				
@@ -178,10 +191,7 @@ class Game:
 		#self.Collect_sprites()
 
 		#for i in range(self.key_n):	
-		#	if key_lst[i].alive == True:		
-		#		self.screen.blit( key_lst[i].get_curr_img() ,(key_lst[i].X, key_lst[i].Y ))
-		self.x=0
-		self.y=0
+
 		count = 0
 		countf=0
 
@@ -209,7 +219,7 @@ class Game:
 
 
 def main():
-	juego = Game(600,600,20) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
+	juego = Game(1,20) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
 				   # 3er y 4to parametro son anchura y altura
 
 	while True: # Loop, el juego se ejecuta dentro de esta clausura
@@ -226,11 +236,11 @@ def main():
 				for j in i:
 					j.Die()
 				#print i
-			print "Pez Choco Con tiburon"
+			
 		pygame.display.update()
 
 def proof():
-	juego = Game(600,600,8,30) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
+	juego = Game(1,8,30) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
 				   # 3er y 4to parametro son anchura y altura
 	print maze_map
 	while True: # Loop, el juego se ejecuta dentro de esta clausura

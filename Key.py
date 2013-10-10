@@ -10,17 +10,19 @@ import Key
 
 class Key(threading.Thread,pygame.sprite.Sprite):
 	# recibe lista de tiburiones, posicion, velocidad y genero
-	def __init__(self,key_lst,X,Y,vel):#		self.Sharks_path = filename
+	def __init__(self,key_lst,X,Y,dim,vel,Map):#		self.Sharks_path = filename
 		#threading.Thread.__init__(self)
 		super(Key, self).__init__()
 		self._stop = threading.Event()
 		pygame.sprite.Sprite.__init__(self)
 		#self.n = n #numero 
 		self.x = X
-		self.y= Y
+		self.y= Y		
+		self.maze_map = Map
+
 		self.alive = True
 		self.opened = False
-		self.vel = 5
+		self.vel = vel	
 		self.img_pos = 0
 		#self.Keys=[]
 #		self.Fisheslist=[]
@@ -32,11 +34,26 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		#self.topleft = [self.X, self.Y]
 		self.key_lst = key_lst
 		self.image = self.key_lst[0]
+		self.image = pygame.transform.scale(self.image, (dim,dim))
 		self.rect = self.image.get_rect() # use image extent values		
 		self.rect.topleft = [self.x, self.y] # put the ball in the top left corner
-
 		self.Or = randrange(0,4)
-
+	
+		count = 0 
+		for val in ( maze_map):
+			if count>20:
+				break
+			for i in range(0,20):
+				if ( val[i] == "0"):
+					#self.screen.blit(self.block_img ,(self.x,self.y))						
+					self.Blocks.append( Block.blocks( self.x, self.y,self.dimension,self.block_img) )
+				if(val[i]=="3"):					
+						self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
+				if (val[i] =="2"):						
+						self.key_x = count
+						self.key_y = i 						
+		print "klk!! " ,self.maze_map
+		
 	def get_img(self):
 		return self.image
 
@@ -51,8 +68,6 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		    OR = 3 : OESTE 
 <<<<<<< HEAD
 		"""
-		self.image = self.shark_img_curr # load ball image
-		self.rect = self.shark_img_curr.get_rect() # use image extent values			
 		self.rect.topleft = [self.x, self.y]
 
 		#print "Shark: ",self.rect.topleft
@@ -68,6 +83,8 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		#self.Or = randrange(4)
 
 		self.img_pos = self.Or+self.img_pos
+
+
 
 		if (self.Or == 0):
 			self.Y -= self.vel
