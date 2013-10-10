@@ -182,7 +182,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.opened = True
 
 	def run(self):
-		print 'Im Key' + self.n " , i will find you!"	
+		print 'Im Key' + self.n +" , i will find you!"
 		while self.alive==True:		
 			self.Mov()
 			time.sleep(vel)

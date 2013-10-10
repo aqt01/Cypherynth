@@ -8,8 +8,6 @@ class Lock(pygame.sprite.Sprite):
 
 	def __init__(self,lock_img,X,Y):
 
-		super(Lock, self).__init__()
-	@	self._stop = threading.Event()
 		pygame.sprite.Sprite.__init__(self)
 		self.X = X
 		self.Y = Y
