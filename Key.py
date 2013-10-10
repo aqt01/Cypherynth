@@ -6,22 +6,23 @@ import threading
 import time
 import game
 import pygame
+import Key
 
 class Key(threading.Thread,pygame.sprite.Sprite):
 	# recibe lista de tiburiones, posicion, velocidad y genero
-	def __init__(self,n,key_lst,X,Y,vel):#		self.Sharks_path = filename
+	def __init__(self,key_lst,X,Y,vel):#		self.Sharks_path = filename
 		#threading.Thread.__init__(self)
 		super(Key, self).__init__()
 		self._stop = threading.Event()
 		pygame.sprite.Sprite.__init__(self)
-		self.n = n #numero 
-		self.X = X
-		self.Y = Y
+		#self.n = n #numero 
+		self.x = X
+		self.y= Y
 		self.alive = True
 		self.opened = False
 		self.vel = 5
 		self.img_pos = 0
-		self.Keys=[]
+		#self.Keys=[]
 #		self.Fisheslist=[]
 		self.type="key"
 		#game.Collect_sprites()
@@ -31,12 +32,12 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		#self.topleft = [self.X, self.Y]
 		self.key_lst = key_lst
 		self.image = self.key_lst[0]
-		self.rect = self.key_img.get_rect() # use image extent values		
-		self.rect.topleft = [self.X, self.Y] # put the ball in the top left corner
+		self.rect = self.image.get_rect() # use image extent values		
+		self.rect.topleft = [self.x, self.y] # put the ball in the top left corner
 
 		self.Or = randrange(0,4)
 
-	def get_curr_img(self):
+	def get_img(self):
 		return self.image
 
 	def load_sprite(self,sprit_sharks,sprit_fishes):
@@ -52,7 +53,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		"""
 		self.image = self.shark_img_curr # load ball image
 		self.rect = self.shark_img_curr.get_rect() # use image extent values			
-		self.rect.topleft = [self.X, self.Y]
+		self.rect.topleft = [self.x, self.y]
 
 		#print "Shark: ",self.rect.topleft
 
@@ -84,7 +85,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 				#self.Y=self.Y_max_limit-20
 				
 		elif(self.Or == 1):
-			self.X += self.vel
+			self.x += self.vel
 			if(self.mov_n==0):
 				self.shark_img_curr = self.shark_lst[self.Or +self.mov_p][0]
 				self.mov_n =1
@@ -102,10 +103,10 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 				
 
 		elif (self.Or == 2):
-			self.Y += self.vel			
+			self.y += self.vel			
 			
 		elif(self.Or ==3):
-			self.X -= self.vel
+			self.x -= self.vel
 			
 			if(self.mov_n==0):
 				self.shark_img_curr = self.shark_lst[self.Or +self.mov_p][0]
@@ -121,26 +122,26 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 				##self.X=X_max_limit-20
 				#self.X=20
 
-		if(self.X>self.X_max_limit):				
-				self.X=0
+		if(self.x>self.X_max_limit):				
+				self.x=0
 				self.movd=0
-		elif(self.Y<self.Y_min_limit):
-				self.Y=self.Y_max_limit
+		elif(self.y<self.Y_min_limit):
+				self.y=self.Y_max_limit
 				self.movd=0
 				#self.Y=20
-		elif(self.Y>self.Y_max_limit):
+		elif(self.y>self.Y_max_limit):
 				self.Y=0
 				self.movd=0				
 				#self.Y=self.Y_max_limit-20
-		elif(self.X<self.X_min_limit):
-				self.X=self.X_max_limit
+		elif(self.x<self.X_min_limit):
+				self.x=self.X_max_limit
 				self.movd=0
 				#self.X=20
 
 			#self.topleft = [self.X, self.Y]
 		self.image = self.shark_img_curr # load ball image
 		self.rect = self.shark_img_curr.get_rect() # use image extent values			
-		self.rect.topleft = [self.X, self.Y] # put the ball in the top left corner
+		self.rect.topleft = [self.x, self.y] # put the ball in the top left corner
 			#print "SPRITE: ", self.spri.rect
 			#print "NOT SPRITE: ", self.X,self.Y
 

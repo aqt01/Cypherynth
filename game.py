@@ -1,10 +1,10 @@
 import pygame
-import Lock, Sharks
+import Lock, Sharks, Key
 import thread
 import time
+import Block
 from random import randrange
 	
-
 	
 KeyList = []
 BlockList = []
@@ -42,7 +42,7 @@ class Game:
 		self.alpha = 128
 		#self.Sharks_spri = pygame.sprite.Group()
 		#self.Fishes_spri = pygame.sprite.Group()		
-#		self.Create_units()
+		self.Create_units()
 		#self.Collect_sprites()
 
 	def read_conf_file(self):		
@@ -63,8 +63,9 @@ class Game:
 	def Collect_sprites(self):
 		# Se vacean las imagenes ya cargadas para ir cargando las demas
 
-		self.Sharks_spri.empty()
-		otherlistshark=[]
+		self.BlockList.empty()
+
+		OtherBlockList=[]
 
 		for i in range(self.Shark_n):	
 			if Sharkslist[i].alive:
@@ -90,19 +91,50 @@ class Game:
 
 	# Funcion para crear las unidades, tanto los peces como los tiburones
 
-	def Key_img_list(self):
+	def key_img_list(self):
 		return self.key_lst
 
 	def Create_units(self):
 		
 		
 		self.Keys = []
+		self.Blocks = []
+
 		self.Keys_sprites = []
 		
-		for i in range (key_n):
-			x = Key.Key( self.key_img_list(), self.X, self.Y)
 
-		key_lst.append(x)
+
+		#for i in range (0,15):
+			#x = Key.Key( self.key_img_list(), self.X, self.Y)
+		
+
+
+		#Creamos bloques en las posiciones del mapa
+
+		count = 0 
+		for val1 in ( maze_map):
+			if count>20:
+				break
+			for i in range(0,20):
+				if ( val1[i] == "0"):
+					#self.screen.blit(self.block_img ,(self.x,self.y))						
+					self.Blocks.append( Block.blocks( self.x, self.y,self.dimension,self.block_img) )
+				if(val1[i]=="3"):					
+						self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
+				if (val1[i]=="2"):
+						self.Key = Key.Key( self.key_img_list(), self.x, self.y,8)
+				#if(val1[i]=="2"):					
+				#		self..append( Key.Key( self.x, self.y,self.dimension,self.lock_img) )
+				
+				self.x=self.dimension+self.x-1
+			self.x=0
+			self.y=self.dimension+self.y-1
+			count=count+1
+	
+
+
+		#for i in range(0,self.maze_length):
+			#key_lst.append(x)
 
 
 	#	self.Collect_sprites()
@@ -153,22 +185,28 @@ class Game:
 		count = 0
 		countf=0
 
-#		for val in( maze_map):		
-#			if (countf>19):
-#				countf=0
-#				break
-		
+		"""
 		for val1 in ( maze_map):
 			if count>19:
 				break
 			for i in range(0,20):
 				if ( val1[i] == "0"):
 					self.screen.blit(self.block_img ,(self.x,self.y))						
+					
 				self.x=self.dimension+self.x-1
 			self.x=0
 			self.y=self.dimension+self.y-1
 			count=count+1
-	
+		"""
+#		for val in( maze_map):		
+#			if (countf>19):
+#				countf=0
+#				break
+		for i in self.Blocks:
+			 self.screen.blit(i.get_img() ,(i.x ,i.y))						
+		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
+		self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
+
 
 def main():
 	juego = Game(600,600,20) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
@@ -192,7 +230,7 @@ def main():
 		pygame.display.update()
 
 def proof():
-	juego = Game(600,600,8,20) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
+	juego = Game(600,600,8,30) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
 				   # 3er y 4to parametro son anchura y altura
 	print maze_map
 	while True: # Loop, el juego se ejecuta dentro de esta clausura
