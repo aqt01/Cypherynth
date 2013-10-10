@@ -54,8 +54,8 @@ class Game:
 			print n
 			if not line:
 				break
-			for i in range(0,20):
-				maze_map.append(line.strip("\n"))
+			#for i in range(0,20):
+			maze_map.append(line.strip("\n"))
 
 		print maze_map[19][9]
 
@@ -150,18 +150,24 @@ class Game:
 		#		self.screen.blit( key_lst[i].get_curr_img() ,(key_lst[i].X, key_lst[i].Y ))
 		self.x=0
 		self.y=0
+		count = 0
+		countf=0
 
-		for val,i in enumerate( maze_map):
-			for val1,j in enumerate( maze_map):
-				if ( i[val1] == '0'):
-					self.screen.blit(self.block_img ,(self.x,self.y))
-					
-				print val1, j[9]
+#		for val in( maze_map):		
+#			if (countf>19):
+#				countf=0
+#				break
+		
+		for val1 in ( maze_map):
+			if count>19:
+				break
+			for i in range(0,20):
+				if ( val1[i] == "0"):
+					self.screen.blit(self.block_img ,(self.x,self.y))						
 				self.x=self.dimension+self.x-1
-			if ( i == '0'):
-				self.screen.blit(self.block_img ,(self.x,self.y))
-					
+			self.x=0
 			self.y=self.dimension+self.y-1
+			count=count+1
 	
 
 def main():
@@ -188,7 +194,7 @@ def main():
 def proof():
 	juego = Game(600,600,8,20) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
 				   # 3er y 4to parametro son anchura y altura
-
+	print maze_map
 	while True: # Loop, el juego se ejecuta dentro de esta clausura
 
 		for event in pygame.event.get():
