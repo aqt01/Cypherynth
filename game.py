@@ -9,7 +9,7 @@ from random import randrange
 KeyList = []
 BlockList = []
 maze_map = []
-
+maze = []
 
 
 
@@ -103,46 +103,47 @@ class Game:
 		return self.key_lst
 
 	def Create_units(self):
-		
-		
+	
 		self.Keys = []
 		self.Blocks = []
-
 		self.Keys_sprites = []
-		
-
-
+		self.tmp = []
 		#for i in range (0,15):
 			#x = Key.Key( self.key_img_list(), self.X, self.Y)
 		
-
-
 		#Creamos bloques en las posiciones del mapa
-
 		count = 0 
-		for val in ( maze_map):
-			if count>20:
-				break
-			for i in range(0,20):
-				if ( val[i] == "0"):
-					#self.screen.blit(self.block_img ,(self.x,self.y))						
+
+		#we iterate one time to collect all the coordinates
+		tmp_list = []
+
+		for val in  maze_map:
+			for i in range(0,20):						  	tmp_list.append(int(val[i]))
+			maze.append(list(tmp_list))
+			tmp_list = []
+
+				
+		for i in range(0,21):
+			for j in range(0,20):
+				if ( maze[i][j] == 0):
+					self.screen.blit(self.block_img ,(self.x,self.y))						
 					self.Blocks.append( Block.block( self.x, self.y,self.dimension,self.block_img) )
-				if(val[i]=="3"):					
-						self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
-				if (val[i] =="2"):						
-						self.key_x = count
-						self.key_y = i 
-						self.key_points = [self.key_x,self.key_y]
-						self.Key = Key.Key( self.key_img_list(), self.x, self.y,self.dimension,8,maze_map)
-						maze_map
+				if(maze[i][j] ==3):							self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
+				if ( maze[i][j] ==2):		
+
+					self.key_x = i
+					self.key_y = j 
+					self.key_points = [self.key_x,self.key_y]
+					self.Key = Key.Key( self.key_img_list(), self.x, self.y,self.dimension,self.key_points,maze)
 				
-				#if(val1[i]=="2"):					
-				#		self..append( Key.Key( self.x, self.y,self.dimension,self.lock_img) )
-				
-				self.x=self.dimension+self.x-1
+				self.x=self.dimension+self.x-1			
 			self.x=0
 			self.y=self.dimension+self.y-1
-			count=count+1
+			
+
+
+		print "weey ",maze[0][9]
+		
 	
 
 
@@ -213,9 +214,9 @@ class Game:
 #				countf=0
 #				break
 		for i in self.Blocks:
-			 self.screen.blit(i.get_img() ,(i.x ,i.y))						
-		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
-		self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
+			self.screen.blit(i.get_img() ,(i.x ,i.y))						
+			self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
+			self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
 
 
 def main():
