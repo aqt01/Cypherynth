@@ -126,7 +126,7 @@ class Game:
 			for i in range(0,20):
 				if ( val[i] == "0"):
 					#self.screen.blit(self.block_img ,(self.x,self.y))						
-					self.Blocks.append( Block.blocks( self.x, self.y,self.dimension,self.block_img) )
+					self.Blocks.append( Block.block( self.x, self.y,self.dimension,self.block_img) )
 				if(val[i]=="3"):					
 						self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
 				if (val[i] =="2"):						

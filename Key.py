@@ -40,19 +40,14 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.Or = randrange(0,4)
 	
 		count = 0 
-		for val in ( maze_map):
+		for val in ( self.maze_map):
 			if count>20:
 				break
 			for i in range(0,20):
-				if ( val[i] == "0"):
-					#self.screen.blit(self.block_img ,(self.x,self.y))						
-					self.Blocks.append( Block.blocks( self.x, self.y,self.dimension,self.block_img) )
-				if(val[i]=="3"):					
-						self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
-				if (val[i] =="2"):						
+				if (val[i] =="2"):	
 						self.key_x = count
-						self.key_y = i 						
-		print "klk!! " ,self.maze_map
+						self.key_y = i 	
+				print "klk!! " ,self.maze_map
 		
 	def get_img(self):
 		return self.image

@@ -1,9 +1,9 @@
 import pygame
 
-class blocks(pygame.sprite.Sprite):
+class block(pygame.sprite.Sprite):
 
 	def __init__(self,X,Y,dim,img):
-		super(blocks, self).__init__()
+		super(block, self).__init__()
 		#pygame.sprite.Sprite.__init__(self)
 		self.x = X
 		self.y = Y
