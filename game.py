@@ -43,13 +43,14 @@ class Game:
 		# Se asigna la velocidad que seran los px que los sprites caminaran por cada paso
 			
 		self.vel = vel
-		#se cargan las imagenes de tiburones y peces
+#e cargan las imagenes de tiburones y peces
 		self.Sprites_img()
 		self.img_pos = 0
 		self.alpha = 128
 		#self.Sharks_spri = pygame.sprite.Group()
 		#self.Fishes_spri = pygame.sprite.Group()		
 		self.Create_units()
+		self.Key.start()
 		#self.Collect_sprites()
 
 	def read_conf_file(self):		
