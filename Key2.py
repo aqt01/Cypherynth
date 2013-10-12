@@ -1,3 +1,5 @@
+
+
 import game
 from random import randrange
 import threading
@@ -17,14 +19,13 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.x = X
 		self.y= Y				
 		self.Point = point
-		self.Or = point[2]
 		self.map_x = point[1]
 		self.map_y = point[0]
 		self.Map = Map
 		self.dimension = dim
 		self.alive = True
 		self.opened = False
-		self.vel = dim/10
+		self.vel = 2
 		self.img_pos = 0
 		self.sons = []
 		self.type="key"
@@ -35,13 +36,11 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.image = pygame.transform.scale(self.image, (dim,dim))
 		self.rect = self.image.get_rect() # use image extent values		
 		self.rect.topleft = [self.x, self.y] # put the ball in the top left corner
-		self.movd=self.vel
+		self.movd=0
 #		print self.Map
-		print " <<<<<<<<<<<<<<<<<<< IM KEY MA NIGGA!!! >>>>>>>>>>>>>>>>>>>>>>>>"
-		#print "HELLO " ,self.map_x
-		#print  "HELLO ",self.map_y
-
-		"""
+		print "HELLO " ,self.map_x
+		print  "HELLO ",self.map_y
+	
 		if (self.Map[self.map_x][self.map_y+1]==1):
 			self.Or=2
 		elif (self.Map[self.map_x][self.map_y-1]==1):
@@ -50,8 +49,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 			self.Or=1
 		elif (self.Map[self.map_x-1][self.map_y-1]==1):
 			self.Or=3
-		"""
-
+		
 	def get_img(self):
 		return self.image
 
@@ -60,72 +58,64 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.block_sprites = sprit_block
 		
 	def Mov(self):
-	 	""" OR = 0 : NORTE
+		""" OR = 0 : NORTE
 		    OR = 1 : ESTE 
 		    OR = 2 : SUR
-		    OR = 3 : OESTE """
-
-		self.rect.topleft = [self.x, self.y]		
+		    OR = 3 : OESTE 
+<<<<<<< HEAD
+		"""
+		self.rect.topleft = [self.x, self.y]
+		#Create
 		print "X: ", self.map_x
 		print "Y: ", self.map_y
-		#print "mov ", self.movd
-		#print "vel ", self.vel
-		print self.Map[self.map_y]
+		print "mov ", self.movd
+		print "vel ", self.vel
 		print "Or ", self.Or
-		print "this : ",self.Map[self.map_y][self.map_x] 
 		print "West: ",self.Map[self.map_x-1][self.map_y] 
 		print "East: ",self.Map[self.map_x+1][self.map_y]
 		print "North: ",self.Map[self.map_x][self.map_y+1]
 		print "South: ",self.Map[self.map_x][self.map_y-1]
+	
+		print "dimension ", self.dimension/10
+
+
 		
-		if (self.Map[self.map_x][self.map_y]==3):
-			self.Win()
-		#print "dimension ", self.dimension/10
-
 		if self.movd > self.dimension:
-			self.movd =self.vel
-			#print "moVED"
-			#print "X: ", self.map_x
-			#print "Y: ", self.map_y
-			#print "map ", self.Map[self.map_x][self.map_y]
-			#print "mov ", self.movd
-			#print "vel ", self.vel
-
-			
-			x = str(self.map_x) + ' ' + str(self.map_y-1) + ' ' + str(self.Map[self.map_x][self.map_y-1])
-			print x
-			x = str(self.map_x+1) + ' ' + str(self.map_y) + ' ' + str(self.Map[self.map_x+1][self.map_y])
-			print x
-			x = str(self.map_x) + ' ' + str(self.map_y+1) + ' ' + str(self.Map[self.map_x][self.map_y+1])
-			print x
-			x = str(self.map_x-1) + ' ' + str(self.map_y) + ' ' + str(self.Map[self.map_x-1][self.map_y])
-			print x
-
+			self.movd =self.dimension/10
+			print "moVED"
+			print "X: ", self.map_x
+			print "Y: ", self.map_y
+			print "mov ", self.movd
+			print "vel ", self.vel
+			print "9 2", self.Map[9][2]
+			print "9 3", self.Map[9][3]
+			print "9 1 ", self.Map[9][1]
+					
 			if (self.Or==0) :
 				 self.map_y=self.map_y-1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 
 			if (self.Or==1):
 				 self.map_x=self.map_x+1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 
 			if (self.Or==2 ):
 				 self.map_y=self.map_y+1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 
 			if (self.Or==3 ) :
 				 self.map_x=self.map_x-1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 			print "X: ", self.map_x
 			print "Y: ", self.map_y
 
 	
 			if(self.map_x>0):
-				"""if (self.Or==0 and self.Map[self.map_x][self.map_y-1]==0) :
+				if (self.Or==0 and self.Map[self.map_x][self.map_y-1]==0) :
 					self.Die()
 				if (self.Or==1 and self.Map[self.map_x+1][self.map_y]==0) :
 					self.Die()
@@ -133,56 +123,66 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 					self.Die()
 				if (self.Or==3 and self.Map[self.map_x-1][self.map_y]==0) :
 					self.Die()
-					"""
+				self.Map[self.map_x][self.map_y]=4
+
+				if self.Or==0:			
+					if (self.Map[self.map_x+1][self.map_y]==1 and (self.Map[self.map_x][self.map_y-1]==4 or self.Map[self.map_x][self.map_y+1]==1 ) ): 
+						x = self.Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
+					if  ( self.Map[self.map_x-1][self.map_y]==1 and (self.Map[self.map_x][self.map_y-1]==4 or self.Map[self.map_x][self.map_y+1]==1 ) ):
+						x = self.Key(self.key_lst,self.x-self.dimension,self.y,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
+				if self.Or==2:			
+					if (self.Map[self.map_x+1][self.map_y]==1 and (self.Map[self.map_x][self.map_y-1]==1 or self.Map[self.map_x][self.map_y+1]==4 ) ): 
+						x = self.Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
+					if  ( self.Map[self.map_x-1][self.map_y]==1 and (self.Map[self.map_x][self.map_y-1]==1 or self.Map[self.map_x][self.map_y+1]==4 ) ):
+						x = self.Key(self.key_lst,self.x-self.dimension,self.y,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
+					
 				
-				if self.Map[self.map_x][self.map_y]==5:	
+				if (self.Or==1 ):
+					if  ( ( self.Map[self.map_x][self.map_y-1]==1 ) and (self.Map[self.map_x-1][self.map_y]==4 or self.Map[self.map_x+1][self.map_y]==1 ) ):
+						x = self.Key(self.key_lst,self.x,self.y-self.dimension,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
+					if  (( self.Map[self.map_x][self.map_y+1]==1) and (self.Map[self.map_x-1][self.map_y]==4 or self.Map[self.map_x+1][self.map_y]==1 )) : 
+						x = self.Key(self.key_lst,self.x,self.y+self.dimension,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
+						
+				if (self.Or==3 ):
+					if  ( ( self.Map[self.map_x][self.map_y-1]==1 ) and (self.Map[self.map_x-1][self.map_y]==1 or self.Map[self.map_x+1][self.map_y]==4 ) ):
+						x = self.Key(self.key_lst,self.x,self.y-self.dimension,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
+					if  (( self.Map[self.map_x][self.map_y+1]==1) and (self.Map[self.map_x-1][self.map_y]==1 or self.Map[self.map_x+1][self.map_y]==4 )) : 
+						x = self.Key(self.key_lst,self.x,self.y+self.dimension,self.dimension,self.Point,self.maze_map)
+						self.sons.append(x)
 					
-					if (self.Map[self.map_x][self.map_y-1]==1):
-						self.Point[2] = 0
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
-
-					if (self.Map[self.map_x+1][self.map_y]==1):
-						self.Point[2] = 1
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
-					if (self.Map[self.map_x][self.map_y+1]==1):
-						self.Point[2] = 2
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
-					if (self.Map[self.map_x-1][self.map_y]==1):
-						self.Point[2] = 3
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
-					
-					for i in game.KeyList:
-						i.start()
-					self.Map[self.map_x][self.map_y]=4
-					self.Die()		
-
+				for i in self.sons:
+					i.start()
+		
 		else :
-			self.movd = self.movd+self.vel
+			self.movd = self.movd+self.dimension/10
 
 		#self.Or = randrange(4)
 
 		
-			if self.alive :
-				if (self.Or == 0):
-					self.y = self.y - self.vel
+		if self.alive :
+			if (self.Or == 0):
+				self.y = self.y- self.mov
 				
-				elif(self.Or == 1):
-					self.x = self.x + self.vel
+			elif(self.Or == 1):
+				self.x = self.x +self.vel
 #				elif (self.==1):
 #					self.shark_img_curr = self.shark_lst[self.Or +self.mov_p][2]
 
-				elif (self.Or == 2):
-					self.y = self.y + self.vel			
+			elif (self.Or == 2):
+				self.y = self.y+ self.vel			
 			
-				elif(self.Or ==3):
-					self.x = self.x - self.vel
+			elif(self.Or ==3):
+				self.x = self.x - self.vel
 			
-				elif(self.comer==1):
-					self.comer=0
+			elif(self.comer==1):
+				self.comer=0
 		
 		#	self.image = self.shark_img_curr # load ball image
 		#	self.rect = self.shark_img_curr.get_rect() # use image extent values			

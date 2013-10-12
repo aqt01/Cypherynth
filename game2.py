@@ -15,7 +15,6 @@ maze = []
 
 
 
-
 class Game:
 
 	def __init__(self,h ,vel,dimen): # w = 800, h = 600
@@ -122,8 +121,7 @@ class Game:
 		tmp_list = []
 
 		for val in  maze_map:
-			for i in range(0,20):						  	
-				tmp_list.append(int(val[i]))
+			for i in range(0,20):						  	tmp_list.append(int(val[i]))
 			maze.append(list(tmp_list))
 			tmp_list = []
 
@@ -138,9 +136,8 @@ class Game:
 
 					self.key_x = i
 					self.key_y = j 
-					self.key_points = [self.key_x,self.key_y,2]
+					self.key_points = [self.key_x,self.key_y]
 					self.Key = Key.Key( self.key_img_list(), self.x, self.y,self.dimension,self.key_points,maze)
-					KeyList.append(self.Key)
 				
 				self.x=self.dimension+self.x-1			
 			self.x=0
@@ -221,11 +218,8 @@ class Game:
 #				break
 		for i in self.Blocks:
 			self.screen.blit(i.get_img() ,(i.x ,i.y))						
-		for i in KeyList:
-			self.screen.blit(i.get_img() ,(i.x ,i.y))						
-		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
-		#self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
-
+			self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
+			self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
 
 
 def main():
