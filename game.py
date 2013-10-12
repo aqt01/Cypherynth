@@ -1,5 +1,3 @@
-
-
 import pygame
 import Lock, Key
 import thread
@@ -8,13 +6,9 @@ import Block
 from random import randrange
 	
 	
-KeyList = []
 BlockList = []
 maze_map = []
 maze = []
-
-
-
 
 class Game:
 
@@ -31,6 +25,8 @@ class Game:
 		self.y = 0
 		self.key_x = 0
 		self.key_y = 0
+		self.sons =0
+		self.sons_obj= []
 
 		# Se carga el path del background
 		self.background_path ="./Images/sprites/Mario_blocks.png"
@@ -136,11 +132,10 @@ class Game:
 				if(maze[i][j] ==3):							self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
 				if ( maze[i][j] ==2):		
 
-					self.key_x = i
-					self.key_y = j 
+					self.key_x = j
+					self.key_y = i 
 					self.key_points = [self.key_x,self.key_y,2]
-					self.Key = Key.Key( self.key_img_list(), self.x, self.y,self.dimension,self.key_points,maze)
-					KeyList.append(self.Key)
+					self.Key = Key.Key( self.key_img_list(), self.x, self.y,self.dimension,self.key_points,maze)					
 				
 				self.x=self.dimension+self.x-1			
 			self.x=0
@@ -169,6 +164,12 @@ class Game:
 
 	#Imagenes de los peces
 	# Se cargan las imagenes de los peces, el mismo proceso se repite con los tiburones
+	def Draw_key(self, img,coord,):
+		self.screen.blit(img , (coord[0],coord[1]) )
+	
+
+
+
 	def Sprites_img(self):
 		
 		self.sprites_path = "./Images/sprites/"
@@ -195,13 +196,6 @@ class Game:
 
 	def draw(self):
 		self.screen.blit( self.background, (0,0) )
-		#self.Collect_sprites()
-
-		#for i in range(self.key_n):	
-
-		count = 0
-		countf=0
-
 		"""
 		for val1 in ( maze_map):
 			if count>19:
@@ -219,12 +213,37 @@ class Game:
 #			if (countf>19):
 #				countf=0
 #				break
+		if self.Key.get_sons()>0:
+			self.sons =  self.sons + self.Key.get_sons()
+			y = self.Key.get_sons_elements()
+
+			for i in y:
+				a = Key.Key( i[0], i[1], i[2],i[3],i[4],i[5])			
+				self.sons_obj.append(a)
+			for i in self.sons_obj:
+				i.start()
+
+		if self.sons>0:
+			for i in self.sons_obj:
+				self.screen.blit(i.get_img(),(i.x,i.y) )
+
+
+
+
+
+			
+			
+		
 		for i in self.Blocks:
-			self.screen.blit(i.get_img() ,(i.x ,i.y))						
-		for i in KeyList:
-			self.screen.blit(i.get_img() ,(i.x ,i.y))						
+			self.screen.blit(i.get_img() ,(i.x ,i.y))							
+
+	#	for i in KeyList:
+	#		self.screen.blit(i.get_img() ,(i.x ,i.y))						     	
 		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
-		#self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
+
+		self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
+		#self.Key.draw()
+
 
 
 

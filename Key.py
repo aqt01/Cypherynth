@@ -2,7 +2,6 @@ import game
 from random import randrange
 import threading
 import time
-import game
 import pygame
 import Key
 
@@ -18,15 +17,15 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.y= Y				
 		self.Point = point
 		self.Or = point[2]
-		self.map_x = point[1]
-		self.map_y = point[0]
+		self.map_x = point[0]
+		self.map_y = point[1]
+		self.sons_elements =[]
 		self.Map = Map
+		self.KeyList=[]
+		self.sons =0
 		self.dimension = dim
 		self.alive = True
-		self.opened = False
 		self.vel = dim/10
-		self.img_pos = 0
-		self.sons = []
 		self.type="key"
 		#game.Collect_sprites()
 		#self.topleft = [self.X, self.Y]
@@ -103,23 +102,23 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 
 			if (self.Or==0) :
 				 self.map_y=self.map_y-1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 
 			if (self.Or==1):
 				 self.map_x=self.map_x+1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 
 			if (self.Or==2 ):
 				 self.map_y=self.map_y+1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 
 			if (self.Or==3 ) :
 				 self.map_x=self.map_x-1
-				 self.Point[0]=self.map_x
-				 self.Point[1]=self.map_y
+				 self.Point[0]=self.map_y
+				 self.Point[1]=self.map_x
 			print "X: ", self.map_x
 			print "Y: ", self.map_y
 
@@ -136,28 +135,35 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 					"""
 				
 				if self.Map[self.map_x][self.map_y]==5:	
-					
+					self.Map[self.map_x][self.map_y]=4
 					if (self.Map[self.map_x][self.map_y-1]==1):
 						self.Point[2] = 0
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
+						x = [self.key_lst,self.x,self.y-self.dimension,self.dimension,self.Point,self.Map]
+						self.sons_elements.append(x)
+						self.sons = self.sons+1
 
 					if (self.Map[self.map_x+1][self.map_y]==1):
 						self.Point[2] = 1
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
+						x = [self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map]
+						self.sons_elements.append(x)
+						self.sons = self.sons+1
+
 					if (self.Map[self.map_x][self.map_y+1]==1):
 						self.Point[2] = 2
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
+						x = [self.key_lst,self.x,self.y+self.dimension,self.dimension,self.Point,self.Map]
+						self.sons_elements.append(x)
+						self.sons = self.sons+1
+
 					if (self.Map[self.map_x-1][self.map_y]==1):
 						self.Point[2] = 3
-						x = Key(self.key_lst,self.x+self.dimension,self.y,self.dimension,self.Point,self.Map)
-						game.KeyList.append(x)
+						x = [self.key_lst,self.x-self.dimension,self.y,self.dimension,self.Point,self.Map]
+						self.sons_elements.append(x)
+						self.sons = self.sons+1
 					
-					for i in game.KeyList:
+					for i in self.KeyList:
 						i.start()
-					self.Map[self.map_x][self.map_y]=4
+				
+
 					self.Die()		
 
 		else :
@@ -165,7 +171,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 
 		#self.Or = randrange(4)
 
-		
+			
 			if self.alive :
 				if (self.Or == 0):
 					self.y = self.y - self.vel
@@ -183,14 +189,20 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 			
 				elif(self.comer==1):
 					self.comer=0
-		
 		#	self.image = self.shark_img_curr # load ball image
 		#	self.rect = self.shark_img_curr.get_rect() # use image extent values			
 		#	self.rect.topleft = [self.x, self.y] # put the ball in the top left corner
 		
-	def Draw(self):		
-		self.screen.blit( self.shark_img_curr,(self.X, self.Y ))
-	
+#	def draw(self):	
+#		game.Game.screen.blit( self.get_img,(self.x, self.y ))
+
+	def get_sons(self):		
+		return self.sons
+
+	def get_sons_elements(self):
+		self.sons = 0
+		return self.sons_elements
+
 
 	def Colision(self,objeto):
 		if (objeto.type=="Block"):
@@ -217,6 +229,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 
 	def Die(self):
 		self.image = self.key_lst[1]		
+		print self.Map
 		self.alive=False
 		self._stop.set()
 	
@@ -227,7 +240,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		print 'Im Key' +" , i will find you!"
 		while self.alive==True:		
 			self.Mov()
-			time.sleep(0.1)
+			time.sleep(0.2)
 
 
 """	def Draw_Sharks(self):
