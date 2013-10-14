@@ -1,4 +1,0 @@
-Width # 800
-Heigth # 600
-Velocity # 8
-Sprites dimensions # 30
