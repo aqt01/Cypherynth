@@ -3,17 +3,13 @@ import Lock, Key
 import thread
 import time
 import Block
-<<<<<<< HEAD
 import string
-=======
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 from random import randrange
 	
 	
 BlockList = []
 maze_map = []
 maze = []
-<<<<<<< HEAD
 
 
 def read_conf_file():
@@ -35,13 +31,8 @@ def read_conf_file():
 		
 class Game:
 	def __init__(self,w,h ,vel,dimen): 
-=======
 # Contiene todas las llaves creadas
 
-class Game:
-
-	def __init__(self,h ,vel,dimen): # w = 800, h = 600
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 		#Se inicializa pygame
 		self.read_conf_file()
 		self.factor = 20
@@ -60,13 +51,8 @@ class Game:
 
 		# Se carga el path del background
 		self.background_path ="./Images/sprites/Mario_blocks.png"
-<<<<<<< HEAD
 		self.Width = w
 		self.Heigth = h
-=======
-		self.Width = self.factor*self.dimension*h
-		self.Heigth = self.factor*self.dimension*h
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 
 		# Se carga el fondo con w y h que son introducidas por parametros
 		self.screen=pygame.display.set_mode( (self.Width,self.Heigth),0,32)
@@ -77,7 +63,6 @@ class Game:
 		# Se asigna la velocidad que seran los px que los sprites caminaran por cada paso
 			
 		self.vel = vel
-<<<<<<< HEAD
 		#Se cargan las imagenes de tiburones y peces
 		self.Sprites_img()
 		self.img_pos = 0
@@ -87,16 +72,7 @@ class Game:
 		self.read_conf_file()
 		
 	# La funcion se encarga de ir colectando las imagenes en dos listas mientras estas se van moviendo durante la ejecucion
-=======
 #e cargan las imagenes de tiburones y peces
-		self.Sprites_img()
-		self.img_pos = 0
-		self.alpha = 128
-		#self.Sharks_spri = pygame.sprite.Group()
-		#self.Fishes_spri = pygame.sprite.Group()		
-		self.Create_units()
-		self.Key.start()
-		#self.Collect_sprites()
 
 	def read_conf_file(self):		
 		f = open('configure','r')
@@ -107,13 +83,10 @@ class Game:
 			print n
 			if not line:
 				break
-			#for i in range(0,20):
 			maze_map.append(line.strip("\n"))
 
-		print maze_map[19][9]
 
 # La funcion se encarga de ir colectando las imagenes en dos listas mientras estas se van moviendo durante la ejecucion
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 	def Collect_sprites(self):
 		# Se vacean las imagenes ya cargadas para ir cargando las demas
 
@@ -139,7 +112,6 @@ class Game:
 
 		for j in otherlistfish:
 			j.load_sprite(self.Sharks_spri,self.Fishes_spri)
-<<<<<<< HEAD
                                 
         # Funcion para crear las unidades, tanto los peces como los tiburones
 
@@ -156,7 +128,6 @@ class Game:
 
     
         
-=======
 				#self.Fishes[i].load_sprite(self.Sharks_spri,self.Fishes_spri)
 				
 		
@@ -164,10 +135,6 @@ class Game:
 
 	# Funcion para crear las unidades, tanto los peces como los tiburones
 
-	def key_img_list(self):
-		return self.key_lst
-
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 	def Create_units(self):
 	
 		self.Keys = []
@@ -195,15 +162,9 @@ class Game:
 				if ( maze[i][j] == 0):
 					self.screen.blit(self.block_img ,(self.x,self.y))						
 					self.Blocks.append( Block.block( self.x, self.y,self.dimension,self.block_img) )
-<<<<<<< HEAD
 				if(maze[i][j] ==3):
 					self.Lock =  Lock.Lock( self.lock_img,self.x, self.y) 
 				if ( maze[i][j] ==2):
-=======
-				if(maze[i][j] ==3):							self.Lock =  Lock.Lock( self.x, self.y,self.dimension,self.lock_img) 
-				if ( maze[i][j] ==2):		
-
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 					self.key_x = i
 					self.key_y = j 
 					self.key_points = [self.key_x,self.key_y,2]
@@ -217,37 +178,12 @@ class Game:
 
 		print "weey ",maze[0][9]
 		
-<<<<<<< HEAD
-=======
-	
-
-
-		#for i in range(0,self.maze_length):
-			#key_lst.append(x)
-
-
-	#	self.Collect_sprites()
-
-		
-#		for i in range(Shark_n): 
-#			key_lst[i].start()
-
-#		for i in range(Fishes_n):
-#			#MODIFICADO
-#			Fisheslist[i].start()
-
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 	#Imagenes de los peces
 	# Se cargan las imagenes de los peces, el mismo proceso se repite con los tiburones
 	def Draw_key(self, img,coord,):
 		self.screen.blit(img , (coord[0],coord[1]) )
 	
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 	def Sprites_img(self):
 		
 		self.sprites_path = "./Images/sprites/"
@@ -262,7 +198,6 @@ class Game:
 		#Se cargan las imagenes del pez varon
 
 		self.lock_img =	self.game.image.load(self.lock_path).convert_alpha(self.background)
-<<<<<<< HEAD
 
 		self.win_img = self.game.image.load(self.win_path).convert_alpha(self.background)
 		self.win_img = pygame.transform.scale(self.win_img, (self.dimension,self.dimension))
@@ -270,13 +205,6 @@ class Game:
 		
 		self.block_img =	self.game.image.load(self.block_path).convert_alpha(self.background) 
 				# Se transforma la imagen a la dimension introducida
-=======
-		
-		self.key_lst = [	self.game.image.load(self.key_path).convert_alpha(self.background), self.game.image.load(self.die_path).convert_alpha(self.background), self.game.image.load(self.win_path).convert_alpha(self.background) ]
-		
-		self.block_img =	self.game.image.load(self.block_path).convert_alpha(self.background) 
-	# Se transforma la imagen a la dimension introducida
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 		self.block_img = pygame.transform.scale(self.block_img, (self.dimension,self.dimension))
 
 
@@ -284,52 +212,15 @@ class Game:
 
 	def draw(self):
 		self.screen.blit( self.background, (0,0) )
-<<<<<<< HEAD
 		
 		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
 		
 		for i in self.key_list:
-			
-=======
-		"""
-		for val1 in ( maze_map):
-			if count>19:
-				break
-			for i in range(0,20):
-				if ( val1[i] == "0"):
-					self.screen.blit(self.block_img ,(self.x,self.y))						
-					
-				self.x=self.dimension+self.x-1
-			self.x=0
-			self.y=self.dimension+self.y-1
-			count=count+1
-		"""
-#		for val in( maze_map):		
-#			if (countf>19):
-#				countf=0
-#				break
-		
-		"""if self.Key.get_sons()>0:
-			self.sons =  self.sons + self.Key.get_sons()
-			y = self.Key.get_sons_elements()
-
-			for i in y:
-				a = Key.Key( i[0], i[1], i[2],i[3],i[4],i[5],i[6])			
-				self.sons_obj.append(a)
-			for i in self.sons_obj:
-				i.start()"""
-
-		for i in self.key_list:
-			#if i.win == True:
-			#	for k in self.key_list:
-			#		k.Win()
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 			if i.get_sons()>0:
 				self.sons =  self.sons + i.get_sons()
 				y = i.get_sons_obj()
 
 				for j in y:
-<<<<<<< HEAD
 					self.key_list.append(j)
 					time.sleep(0.1)
 					self.key_list[-1].start()
@@ -346,87 +237,16 @@ def main():
 	conf = read_conf_file()
 	print conf
 	juego = Game(int(conf[0]),int(conf[1]),int(conf[2]),int(conf[3])) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
-				   
-=======
-	#				j.start()
-					self.key_list.append(j)
-					time.sleep(0.05)
-					self.key_list[-1].start()
-
-			self.screen.blit(i.get_img() ,(i.x ,i.y))				
-							#for i in self.sons_obj:
-				#	i.start()
-
-
-
-
-
-
-	
-
-
-
-
-
-			
-			
-		
-		for i in self.Blocks:
-			self.screen.blit(i.get_img() ,(i.x ,i.y))							
-
-	#	for i in KeyList:
-	#		self.screen.blit(i.get_img() ,(i.x ,i.y))						     	
-		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
-		
-		#self.screen.blit(self.Key.get_img() , (self.Key.x,self.Key.y))
-		#self.Key.draw()
-
-
-
-
-def main():
-	juego = Game(1,20) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
-				   # 3er y 4to parametro son anchura y altura
-
-	while True: # Loop, el juego se ejecuta dentro de esta clausura
-
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT: # Para salir del juego
-				exit_game()
-		juego.draw()# Para dibujjar los sprites del juego
-		colisionDict =pygame.sprite.groupcollide(juego.Sharks_spri,juego.Fishes_spri, 0, 0) # Para capturar las colisiones entre
-										# Tiburones y peces, devuelve un diccionario con colisiones
-		if  colisionDict:
-			colisiones=colisionDict.values()
-			for i in colisiones:
-				for j in i:
-					j.Die()
-				#print i
-			
-		pygame.display.update()
-
-def proof():
-	juego = Game(1,8,40) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
-				   # 3er y 4to parametro son anchura y altura
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 	print maze_map
 	while True: # Loop, el juego se ejecuta dentro de esta clausura
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: # Para salir del juego
 				exit_game()
-<<<<<<< HEAD
 		juego.draw()# Para dibujar los sprites del juego
-=======
-		juego.draw()# Para dibujjar los sprites del juego
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 		pygame.display.update()
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
 	main()
-=======
-	proof()
->>>>>>> ad74fee00dc88596d5196ba6a0e8795352eea452
 
