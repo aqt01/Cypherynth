@@ -37,6 +37,8 @@ class Game:
 		self.read_conf_file()
 		self.factor = 20
 		self.key_list=[]
+		self.Solution_lst = []
+		self.Spikey_lst = []
 		self.maze_length = h*self.factor*dimen
 		self.dimension = dimen
 		self.game = pygame
@@ -74,16 +76,16 @@ class Game:
 	# La funcion se encarga de ir colectando las imagenes en dos listas mientras estas se van moviendo durante la ejecucion
 #e cargan las imagenes de tiburones y peces
 
-	def read_conf_file(self):		
-		f = open('configure','r')
-		n=0
-		while 1:
-			line = f.readline()
-			n = n +1
-			print n
-			if not line:
-				break
-			maze_map.append(line.strip("\n"))
+	#def read_conf_file(self):		
+	#	f = open('configure','r')
+	#	n=0
+	#	while 1:
+	#		line = f.readline()
+	#		n = n +1
+	#		print n
+	#		if not line:
+	#			break
+	#		maze_map.append(line.strip("\n"))
 
 
 # La funcion se encarga de ir colectando las imagenes en dos listas mientras estas se van moviendo durante la ejecucion
@@ -139,7 +141,6 @@ class Game:
 	
 		self.Keys = []
 		self.Blocks = []
-		self.Keys_sprites = []
 		self.tmp = []
 		#for i in range (0,15):
 			#x = Key.Key( self.key_img_list(), self.X, self.Y)
@@ -180,8 +181,8 @@ class Game:
 		
 	#Imagenes de los peces
 	# Se cargan las imagenes de los peces, el mismo proceso se repite con los tiburones
-	def Draw_key(self, img,coord,):
-		self.screen.blit(img , (coord[0],coord[1]) )
+	#def Draw_key(self, img,coord,):
+	#	self.screen.blit(img , (coord[0],coord[1]) )
 	
 
 	def Sprites_img(self):
@@ -215,7 +216,23 @@ class Game:
 		
 		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
 		
-		for i in self.key_list:
+		for j in self.Solution_lst:
+			self.screen.blit(j.get_img() ,(j.x ,j.y))
+			if j.is_spikey() :
+				z = j.get_spikey()
+				self.Spikey_lst.append(z)
+
+		for k in self.Spikey_lst:
+			self.screen.blit(k.get_img() ,(k.x ,k.y))
+		
+		for i in self.Blocks:
+			self.screen.blit(i.get_img() ,(i.x ,i.y))		
+		for i in self.key_list:			
+			if i.Did_win():
+				z = i.Call_solution()
+				self.Solution_lst.append(z)
+				self.Solution_lst[-1].start()
+
 			if i.get_sons()>0:
 				self.sons =  self.sons + i.get_sons()
 				y = i.get_sons_obj()
@@ -226,9 +243,7 @@ class Game:
 					self.key_list[-1].start()
 
 			self.screen.blit(i.get_img() ,(i.x ,i.y))				
-							
-		for i in self.Blocks:
-			self.screen.blit(i.get_img() ,(i.x ,i.y))							
+	
 				
 
 

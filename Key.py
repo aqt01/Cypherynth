@@ -4,6 +4,8 @@ import threading
 import time
 import pygame
 import Key
+import copy
+import Solution
 
 class Key(threading.Thread,pygame.sprite.Sprite):
 	# recibe lista de tiburiones, posicion, velocidad y genero
@@ -19,7 +21,7 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.map_x = point[0]
 		self.map_y = point[1]
 		self.sons_obj =[]
-		self.Map = Map
+		self.Map = copy.deepcopy(Map)
 		self.sons =0
 		self.dimension = dim
 		self.alive = True
@@ -162,6 +164,13 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.sons = 0
 		return self.sons_obj
 
+	def Did_win(self):
+		return self.win
+
+	def Call_solution(self):
+		x = Solution.Solution_finder(self.dimension,self.Map)
+		self.win = False
+		return x
 
 	def Die(self):
 		self.image = self.key_lst[1]		
@@ -182,8 +191,6 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		self.alive=False
 		self.sons=0
 		#self._stop.set()
-	
-
 
 	def run(self):
 		print 'Key: Im Key' +" , i will find you!"
