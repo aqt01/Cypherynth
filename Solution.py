@@ -132,7 +132,7 @@ class Solution_finder(threading.Thread,pygame.sprite.Sprite):
 		print self.Map
 		time.sleep(0.3)
 		self.alive=False
-			self.image = self.win
+		self.image = self.win
 		self.sons=0
 		self._stop.set()
 	
