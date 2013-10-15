@@ -23,8 +23,10 @@ class Solution_finder(threading.Thread,pygame.sprite.Sprite):
 		self.dimension = dim
 		self.alive = True
 		self.vel = dim/10
-		self.image = pygame.image.load("./Images/sprites/Solution.png") 
-		self.image = pygame.transform.scale(self.image, (dim,dim))		
+		self.image = pygame.image.load("./Images/sprites/Solution.png") 		
+		self.image = pygame.transform.scale(self.image, (dim,dim))	
+		self.win = pygame.image.load("./Images/sprites/Win.png")
+		self.win = pygame.transform.scale(self.win,(dim,dim))
 		#self.spikey_lst = []		
 		self.spikey_available = False
 
@@ -130,6 +132,7 @@ class Solution_finder(threading.Thread,pygame.sprite.Sprite):
 		print self.Map
 		time.sleep(0.3)
 		self.alive=False
+			self.image = self.win
 		self.sons=0
 		self._stop.set()
 	

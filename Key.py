@@ -178,7 +178,8 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 		print " Key: I died  "
 		self.alive=False
 		self.sons=0
-		#self._stop.set()
+		self._stop.set()		
+		del self
 	
 	def Win(self):
 		self.win = True
