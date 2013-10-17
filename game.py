@@ -12,7 +12,7 @@ maze_map = []
 maze = []
 
 
-def read_conf_file():
+def Read_conf_file():
 		conf = []
 		all=string.maketrans('','')
 		nodigs=all.translate(all, string.digits)
@@ -34,7 +34,7 @@ class Game:
 # Contiene todas las llaves creadas
 
 		#Se inicializa pygame
-		self.read_conf_file()
+		self.Read_conf_file()
 		self.factor = 20
 		self.key_list=[]
 		self.Solution_lst = []
@@ -58,7 +58,7 @@ class Game:
 
 		# Se carga el fondo con w y h que son introducidas por parametros
 		self.screen=pygame.display.set_mode( (self.Width,self.Heigth),0,32)
-		# Se carga la imagen de fondo
+			# Se carga la imagen de fondo
 		
 		self.background = self.game.image.load(self.background_path).convert()
 		self.background = pygame.transform.scale(self.background,(self.Width,self.Heigth))
@@ -71,56 +71,10 @@ class Game:
 		self.alpha = 128
 		self.Create_units()
 		self.Key.start()
-		self.read_conf_file()
-		
-	# La funcion se encarga de ir colectando las imagenes en dos listas mientras estas se van moviendo durante la ejecucion
-#e cargan las imagenes de tiburones y peces
-
-	#def read_conf_file(self):		
-	#	f = open('configure','r')
-	#	n=0
-	#	while 1:
-	#		line = f.readline()
-	#		n = n +1
-	#		print n
-	#		if not line:
-	#			break
-	#		maze_map.append(line.strip("\n"))
-
 
 # La funcion se encarga de ir colectando las imagenes en dos listas mientras estas se van moviendo durante la ejecucion
-	def Collect_sprites(self):
-		# Se vacean las imagenes ya cargadas para ir cargando las demas
-
-		self.BlockList.empty()
-
-		OtherBlockList=[]
-
-		for i in range(self.Shark_n):	
-			if Sharkslist[i].alive:
-				otherlistshark.append(Sharkslist[i])
-				self.Sharks_spri.add( Sharkslist[i])
-
-		for j in otherlistshark:
-			j.load_sprite(self.Sharks_spri,self.Fishes_spri)
-
-		otherlistfish = []
-
-		for i in range(self.Fishes_n):
-			if Fisheslist[i].alive:
-				
-				otherlistfish.append(Fisheslist[i])
-				self.Fishes_spri.add( Fisheslist[i])
-
-		for j in otherlistfish:
-			j.load_sprite(self.Sharks_spri,self.Fishes_spri)
-                                
-        # Funcion para crear las unidades, tanto los peces como los tiburones
-
-        def key_img_list(self):
-                return self.key_lst
         
-        def read_conf_file(self):       
+        def Read_conf_file(self):       
                 f = open('Map.txt','r')               
                 while 1:
                     line = f.readline()
@@ -129,12 +83,6 @@ class Game:
                     maze_map.append(line.strip("\n"))
 
     
-        
-				#self.Fishes[i].load_sprite(self.Sharks_spri,self.Fishes_spri)
-				
-		
-
-
 	# Funcion para crear las unidades, tanto los peces como los tiburones
 
 	def Create_units(self):
@@ -142,8 +90,6 @@ class Game:
 		self.Keys = []
 		self.Blocks = []
 		self.tmp = []
-		#for i in range (0,15):
-			#x = Key.Key( self.key_img_list(), self.X, self.Y)
 		
 		#Creamos bloques en las posiciones del mapa
 		count = 0 
@@ -169,7 +115,7 @@ class Game:
 					self.key_x = i
 					self.key_y = j 
 					self.key_points = [self.key_x,self.key_y,2]
-					self.Key = Key.Key( self.key_img_list(), self.x, self.y,self.dimension,self.key_points,maze,2)					
+					self.Key = Key.Key( self.Key_img_list(), self.x, self.y,self.dimension,self.key_points,maze,2)					
 					self.key_list.append(self.Key)	
 				self.x=self.dimension+self.x			
 			self.x=0
@@ -211,7 +157,9 @@ class Game:
 
 		self.sprites_img = [ self.lock_img,list( self.key_lst),self.block_img]
 
-	def draw(self):
+	def Key_img_list(self):
+		return self.key_lst
+	def Draw(self):
 		self.screen.blit( self.background, (0,0) )
 		
 		self.screen.blit(self.Lock.get_img() , (self.Lock.x,self.Lock.y))
@@ -249,7 +197,7 @@ class Game:
 
 def main():
 
-	conf = read_conf_file()
+	conf = Read_conf_file()
 	print conf
 	juego = Game(int(conf[0]),int(conf[1]),int(conf[2]),int(conf[3])) #Se recibe 1er parametro la cantidad de tiburones y 2do cantidad de peces,
 	print maze_map
@@ -258,7 +206,7 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: # Para salir del juego
 				exit_game()
-		juego.draw()# Para dibujar los sprites del juego
+		juego.Draw()# Para dibujar los sprites del juego
 		pygame.display.update()
 
 

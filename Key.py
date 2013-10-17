@@ -40,9 +40,6 @@ class Key(threading.Thread,pygame.sprite.Sprite):
 	def get_img(self):
 		return self.image
 
-	def load_sprite(self,sprit_sharks,sprit_fishes):
-		self.key_sprites = sprit_key
-		self.block_sprites = sprit_block
 		
 	def Mov(self):
 	 	""" OR = 0 : NORTE

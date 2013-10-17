@@ -14,12 +14,10 @@ class Lock(pygame.sprite.Sprite):
 		self.x = X
 		self.y = Y
 		self.locked = True
-		self.img_pos = 0
 
 		self.image = lock_img
 		self.rect = self.image.get_rect() # use image extent values			
 		self.rect.topleft = [self.x, self.y] # put the ball in the top left corner		
-		self.type="lock"
 		
 	def unlocked(self):
 		self.locked = False

@@ -27,7 +27,6 @@ class Solution_finder(threading.Thread,pygame.sprite.Sprite):
 		self.image = pygame.transform.scale(self.image, (dim,dim))	
 		self.win = pygame.image.load("./Images/sprites/Win.png")
 		self.win = pygame.transform.scale(self.win,(dim,dim))
-		#self.spikey_lst = []		
 		self.spikey_available = False
 
 
