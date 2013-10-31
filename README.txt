@@ -1,4 +1,3 @@
-
 Sobre el programa:
 
 
@@ -10,8 +9,7 @@ de c�digo durante la 10ma semana de intec.
 
 Cypherynth, no es nada mas y nada menos que un laberinto donde se demuestra el uso de hilos 
 mediante varias llaves son las responsables de encuentrar el pestillo (salida). 
-Es una demostracion del concepto de hilos, no un juego.
-
+Es una demostracion del concepto de hilos.
 
 Ejecucion:
 
