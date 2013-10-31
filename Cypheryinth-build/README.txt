@@ -1,12 +1,11 @@
 
-
 Sobre el programa:
 
 
 "Cypherynth" Es una palabra compuesta del ingl. "Cypher" (Cifrado) y "Laberynth"(Laberinto),
 
 El nombre surge como resultado de la falta de un nombre en una noche con mucha adrenalina
-de código durante la 10ma semana de intec. 
+de cï¿½digo durante la 10ma semana de intec. 
 
 
 Cypherynth, no es nada mas y nada menos que un laberinto donde se demuestra el uso de hilos 
@@ -16,15 +15,21 @@ Es una demostracion del concepto de hilos, no un juego.
 
 Ejecucion:
 
+Windows
+	
 Dentro de la carpeta extraida, ejecute el archivo "game.exe", abriran dos pantallas, 
 una terminal que tendra las salidas del programa y una pantalla que mostrara el laberinto.
 
 Para cerrar el programa, cierre la terminal, ya que si cierra la ventana con laberinto 
-puede que se cuelgue el programa
+puede que se cuelgue el programa.
 
 
+Linux
 
-Archvos de configuración:
+Una vez instalada la libreria pygame, ejecute "python game.py"
+
+
+Archvos de configuraciï¿½n:
 
 configure.txt: 
 Contiene los datos de dimensiones de la pantalla, velocidad de las llaves y 
@@ -39,11 +44,20 @@ Contiene el mapa del laberinto
 	3 = Pestillo
 
 
+
+LibrerÃ­as:
+
+Pyinstaller (para desplegar el ejecutable .exe): http://www.pyinstaller.org/
+Pygame 1.9.1
+
+
+
 Nota: 
 
 *** BUGS (Errores conocidos)
 	*** Cuando se multiplican las llaves al mismo tiempo no hay excepcio y el laberinto deja de dibujar
 	*** En alguas ocasiones los hilos toman otra direccion
+
 
 Las faltas de acento se deben a que el documento fue escrito usando ASCII 128 bits :)
 
@@ -53,8 +67,8 @@ Las faltas de acento se deben a que el documento fue escrito usando ASCII 128 bi
 						< Aqt01 >
                                                     v
 
-(Isaías 55.6) 
-“Buscad á Jehová mientras puede ser hallado, llamadle en tanto que está cercano” 
+(Isaï¿½as 55.6) 
+ï¿½Buscad ï¿½ Jehovï¿½ mientras puede ser hallado, llamadle en tanto que estï¿½ cercanoï¿½ 
 
 (Juan 14.6) 
-"Jesús le dijo: Yo soy el camino, y la verdad, y la vida; nadie viene al Padre, sino por mí."
+"Jesï¿½s le dijo: Yo soy el camino, y la verdad, y la vida; nadie viene al Padre, sino por mï¿½."
